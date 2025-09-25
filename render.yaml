@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: airms-backend
+    env: python
+    buildCommand: pip install --upgrade pip setuptools wheel && pip install -r backend/requirements.txt
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MONGODB_URL
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GROQ_API_KEY
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false
+      - key: PII_ENCRYPTION_KEY
+        sync: false
+      - key: GOOGLE_FACT_CHECK_API_KEY
+        sync: false
+      - key: NEWSAPI_KEY
+        sync: false
+    healthCheckPath: /health
+    autoDeploy: true
