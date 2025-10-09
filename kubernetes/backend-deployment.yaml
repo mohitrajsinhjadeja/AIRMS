@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: airms-backend
+  namespace: airms
+  labels:
+    app: airms-backend
+    version: v1
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: airms-backend
+  template:
+    metadata:
+      labels:
+        app: airms-backend
+        version: v1
+    spec:
+      serviceAccountName: airms-backend
+      containers:
+      - name: airms-backend
+        image: gcr.io/PROJECT_ID/airms-backend:latest
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: ENVIRONMENT
+          value: "production"
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: airms-secrets
+              key: database-url
+        - name: JWT_SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: airms-secrets
+              key: jwt-secret
+        - name: CORS_ORIGINS
+          value: "https://airms.yourdomain.com"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        securityContext:
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 1000
+          capabilities:
+            drop:
+            - ALL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airms-backend-service
+  namespace: airms
+  labels:
+    app: airms-backend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  selector:
+    app: airms-backend
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: airms-backend
+  namespace: airms
+  annotations:
+    iam.gke.io/gcp-service-account: airms-backend@PROJECT_ID.iam.gserviceaccount.com

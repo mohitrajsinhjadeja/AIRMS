@@ -1,0 +1,19 @@
+runtime: python39
+entrypoint: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+env_variables:
+  ENVIRONMENT: "production"
+  DEBUG: "false"
+  MONGODB_URL: ${MONGODB_URL}
+  GEMINI_API_KEY: ${GEMINI_API_KEY}
+  JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 10
+
+handlers:
+- url: /.*
+  script: auto
+  secure: always

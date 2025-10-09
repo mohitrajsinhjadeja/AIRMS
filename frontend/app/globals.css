@@ -1,0 +1,225 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark Theme - Professional Dashboard */
+  --background: #0f0f23;
+  --background-secondary: #1a1a2e;
+  --background-tertiary: #16213e;
+  
+  --foreground: #ffffff;
+  --foreground-muted: #a0a0a0;
+  --foreground-light: #6b7280;
+  
+  /* Dark cards */
+  --card: #1a1a2e;
+  --card-foreground: #ffffff;
+  --card-hover: #16213e;
+  --card-border: #2d3748;
+  
+  /* Primary Colors - Blue */
+  --primary: #3b82f6;
+  --primary-dark: #1d4ed8;
+  --primary-light: #60a5fa;
+  --primary-foreground: #ffffff;
+  --primary-hover: #2563eb;
+  
+  /* Secondary Colors */
+  --secondary: #2d3748;
+  --secondary-foreground: #e2e8f0;
+  --secondary-hover: #4a5568;
+  
+  /* Accent Colors */
+  --accent: #8b5cf6;
+  --accent-foreground: #ffffff;
+  --accent-hover: #7c3aed;
+  
+  /* Success/Error */
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --success-hover: #059669;
+  
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #dc2626;
+  
+  /* Borders and Inputs */
+  --border: #2d3748;
+  --border-light: #4a5568;
+  --border-strong: #718096;
+  --input: #1a1a2e;
+  --input-border: #4a5568;
+  --input-focus: #3b82f6;
+  --ring: #3b82f6;
+  
+  /* Shadows - Dark theme */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f0f23;
+    --background-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    --background-secondary: linear-gradient(135deg, #2d1b69 0%, #11055c 100%);
+    --background-tertiary: linear-gradient(135deg, #0f3460 0%, #0d47a1 100%);
+    
+    --foreground: #ffffff;
+    --foreground-muted: #94a3b8;
+    
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+    
+    --card: rgba(30, 30, 46, 0.9);
+    --card-foreground: #ffffff;
+    --card-hover: rgba(30, 30, 46, 1);
+    
+    --primary: #8b5cf6;
+    --primary-gradient: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+    
+    --secondary: #1e293b;
+    --secondary-foreground: #cbd5e1;
+    --secondary-hover: #334155;
+    
+    --border: rgba(71, 85, 105, 0.3);
+    --border-strong: #475569;
+    --input: rgba(30, 30, 46, 0.9);
+    --input-border: rgba(71, 85, 105, 0.5);
+  }
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Custom Classes - ElevenLabs Style */
+.elevenlabs-card {
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.elevenlabs-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.primary-button {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: 1px solid var(--primary);
+}
+
+.primary-button:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.secondary-button {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+  border: 1px solid var(--border);
+}
+
+.secondary-button:hover {
+  background: var(--secondary-hover);
+  border-color: var(--border-strong);
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient 3s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}

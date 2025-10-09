@@ -1,0 +1,26 @@
+app:
+  name: AIRMS+
+  version: 2.0.0
+  environment: development
+  debug: true
+
+database:
+  uri: ${MONGODB_URI}
+  db: airms
+  pool_size: 5
+
+ai_services:
+  routing_strategy: cost_optimized
+  groq_traffic_percentage: 80
+  gemini_traffic_percentage: 20
+
+security:
+  jwt_algorithm: HS256
+  access_token_expire_minutes: 30
+
+logging:
+  level: INFO
+  format: json
+  handlers:
+    - console
+    - file

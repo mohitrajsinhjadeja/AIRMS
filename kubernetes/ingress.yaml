@@ -1,0 +1,50 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: airms-ingress
+  namespace: airms
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: airms-ip
+    networking.gke.io/managed-certificates: airms-ssl-cert
+    kubernetes.io/ingress.class: "gce"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+  - host: airms.yourdomain.com
+    http:
+      paths:
+      - path: /api/*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: airms-backend-service
+            port:
+              number: 80
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: airms-frontend-service
+            port:
+              number: 80
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: airms-ssl-cert
+  namespace: airms
+spec:
+  domains:
+    - airms.yourdomain.com
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: airms-secrets
+  namespace: airms
+type: Opaque
+data:
+  # Base64 encoded values - replace with actual values
+  database-url: cG9zdGdyZXNxbDovL3VzZXI6cGFzc0Bsb2NhbGhvc3QvYWlybXM=
+  jwt-secret: eW91ci1qd3Qtc2VjcmV0LWtleQ==

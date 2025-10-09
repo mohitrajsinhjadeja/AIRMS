@@ -1,0 +1,17 @@
+app:
+  name: AIRMS
+  version: 2.0.0
+  environment: production
+
+database:
+  uri: ${MONGODB_URI}
+  pool_size: 20
+
+llm:
+  provider: groq
+  timeout: 60
+
+logging:
+  level: WARNING
+  format: json
+  output: console,file

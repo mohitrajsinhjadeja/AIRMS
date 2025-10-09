@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: airms
+  labels:
+    name: airms
+    environment: production
